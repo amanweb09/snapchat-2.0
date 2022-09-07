@@ -6,7 +6,6 @@ const hashingService = require("../../services/hashing-service");
 class SignupController {
 
     async signupUser(req, res) {
-        console.log(req.body);
         const { name,
             birthday,
             username,

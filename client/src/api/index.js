@@ -11,5 +11,11 @@ const api = axios.create({
     }
 })
 
+/* authentication */
 export const signup = async (data) => api.post('/api/signup', data)
 export const refresh = async () => api.get('/api/refresh')
+export const login = async (data) => api.post('/api/login', data)
+export const logout = async () => api.post('/api/logout')
+
+/* snaps */
+export const sendSnap = async (data) => api.post('/api/snap/create', data)

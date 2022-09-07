@@ -8,5 +8,6 @@ const authenticate = require('../middleware/authenticate')
 router.post('/signup', signupController.signupUser)
 router.post('/login', loginController.loginUser)
 router.get('/refresh', authenticate, loginController.refreshUser)
+router.post('/logout', authenticate, loginController.logout)
 
 module.exports = router

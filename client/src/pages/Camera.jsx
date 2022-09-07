@@ -1,9 +1,13 @@
 import React, { useState, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 // import { useState } from 'react'
 import CaptureScreen from '../components/home/CaptureScreen'
 import Snap from '../components/home/Snap'
+import { clearRecepients, setSnap as setSnapInStore } from '../store/snap-slice'
 
 const Camera = () => {
+
+  const dispatch = useDispatch()
 
   const cameraRef = useRef(null)
   const [snap, setSnap] = useState('')
@@ -14,6 +18,8 @@ const Camera = () => {
   }
 
   function discardSnap() {
+    dispatch(setSnapInStore({ snap: null }))
+    dispatch(clearRecepients())
     setSnap('')
   }
 
@@ -24,8 +30,8 @@ const Camera = () => {
           <Snap cameraRef={cameraRef}
             setSnap={setSnap}
             clickSnap={clickSnap}
-            snap={snap} 
-            discardSnap={discardSnap}/>
+            snap={snap}
+            discardSnap={discardSnap} />
           :
           <CaptureScreen
             cameraRef={cameraRef}

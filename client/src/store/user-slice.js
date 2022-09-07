@@ -10,8 +10,6 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
        setIsAuth: (state, action) => {
-            // state.isAuth = action.payload.isAuth,
-            // state.user = action.payload.user
             state.isAuth = action.payload.isAuth
             state.user = action.payload.user
        }
