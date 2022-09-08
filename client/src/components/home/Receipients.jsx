@@ -1,54 +1,82 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { setRecepients } from '../../store/snap-slice'
 import BestFriendCard from '../shared/BestFriendCard'
-import { sendSnap as createSnapOnServer } from '../../api'
+import { getAllUsers, sendSnap as createSnapOnServer } from '../../api'
 
-const bestFriends = [
-    {
-        _id: '1',
-        name: 'eesh',
-        bitmoji: '/images/bitmoji-1.png',
-        streak: 10
-    },
-    {
-        _id: '2',
-        name: 'ansh',
-        bitmoji: '/images/bitmoji-3.png',
-        streak: 1789
-    },
-    {
-        _id: '3',
-        name: 'mridu',
-        bitmoji: '/images/bitmoji-2.png',
-        streak: 35
-    },
-    {
-        _id: '4',
-        name: 'guddu',
-        bitmoji: '/images/bitmoji-1.png',
-        streak: 250
-    }
-]
+// const bestFriends = [
+//     {
+//         _id: '1',
+//         name: 'eesh',
+//         bitmoji: '/images/bitmoji-1.png',
+//         streak: 10
+//     },
+//     {
+//         _id: '2',
+//         name: 'ansh',
+//         bitmoji: '/images/bitmoji-3.png',
+//         streak: 1789
+//     },
+//     {
+//         _id: '3',
+//         name: 'mridu',
+//         bitmoji: '/images/bitmoji-2.png',
+//         streak: 35
+//     },
+//     {
+//         _id: '4',
+//         name: 'guddu',
+//         bitmoji: '/images/bitmoji-1.png',
+//         streak: 250
+//     }
+// ]
 
 const Receipients = ({ setShowReceipientsScreen }) => {
 
     const dispatch = useDispatch()
 
+    const navigate = useNavigate()
+
     const { recepients, snap } = useSelector((state) => state.snap)
+
+    const [bestFriends, setBestFriends] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+
+        async function getUsers() {
+            try {
+                const { data } = await getAllUsers()
+                setBestFriends(data.users)
+
+            } catch (error) {
+                console.log(error);
+                alert(error.response.data.err || "Something went wrong!")
+            }
+        }
+
+        getUsers()
+
+    }, [])
 
     function addToRecepientsList(recepient) {
         dispatch(setRecepients(recepient))
     }
 
     async function sendSnap() {
+        setLoading(true)
         try {
-            const { data } = await createSnapOnServer({
+            await createSnapOnServer({
                 recepients, snap
             })
-            console.log(data);
+            setLoading(true)
+            navigate('/snaps')
+
         } catch (error) {
             console.log(error.response.data);
+            setLoading(true)
+            alert(error.response.data.err || "snap couldn't be sent!")
         }
     }
 
@@ -63,7 +91,12 @@ const Receipients = ({ setShowReceipientsScreen }) => {
                                 <span
                                     key={recepient._id}
                                     className="capitalize">
-                                    {recepient.name},&nbsp;
+                                    {recepient.name}
+                                    {
+                                        recepients.lastIndexOf(recepient) !== recepients.length - 1 ?
+                                            <span>,</span> : <></>
+                                    }
+                                    &nbsp;
                                 </span>
                             )
                         })
@@ -71,13 +104,23 @@ const Receipients = ({ setShowReceipientsScreen }) => {
                 </div>
                 {
                     recepients.length ?
-                        <div className="w-10 h-10 rounded-full flex-center">
-                            <img
-                                onClick={sendSnap}
-                                src="/images/send.png"
-                                alt="send"
-                                className='w-8' />
-                        </div>
+                        <>
+                            {
+                                loading ?
+                                    <div className="spin w-8 h-8 rounded-full border-4 border-solid border-x-white border-b-white border-t-transparent">
+
+                                    </div>
+                                    :
+                                    <div className="w-10 h-10 rounded-full flex-center">
+                                        <img
+                                            onClick={sendSnap}
+                                            src="/images/send.png"
+                                            alt="send"
+                                            className='w-8' />
+                                    </div>
+
+                            }
+                        </>
                         : <></>
                 }
 

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Camera from './pages/Camera';
 import { refresh } from './api';
 import { setIsAuth } from './store/user-slice';
+import Snaps from './pages/Snaps';
 
 function App() {
 
@@ -53,6 +54,12 @@ function App() {
         <Route path='/home' element={
           <AuthRoute>
             <Camera />
+          </AuthRoute>
+        } />
+
+        <Route path='/snaps' element={
+          <AuthRoute>
+            <Snaps />
           </AuthRoute>
         } />
 
