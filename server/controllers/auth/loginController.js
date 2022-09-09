@@ -1,6 +1,7 @@
 const tokenService = require("../../services/token-service");
 const userService = require("../../services/user-service")
-const { accessSecret, hashsecret } = require('../../env')
+const { accessSecret, hashsecret } = require('../../env');
+const hashingService = require("../../services/hashing-service");
 
 class SignupController {
 

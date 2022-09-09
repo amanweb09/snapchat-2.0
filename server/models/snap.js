@@ -14,9 +14,8 @@ const snapSchema = new Schema({
     recepients: [
         {
             receiver: {
-                type: Schema.Types.ObjectId,
-                ref: 'users',
-                unique: false 
+                type: Object,
+                required: true
             },
             isOpened: {
                 type: Boolean,

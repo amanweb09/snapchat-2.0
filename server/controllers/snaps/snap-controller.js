@@ -23,20 +23,44 @@ class SnapController {
             console.log(error);
             return res.status(500).json({ err: "Couldn't process your snap :(" })
         }
+        
+        const receivers = await snapService.getReceivers(recepients)
+        const populatedReceivers = [];
+
+        receivers.forEach((receiver) => {
+            populatedReceivers.push({
+                receiver,
+                isOpened: false
+            })
+        })
 
         const snapObject = {
-            snap: `/upload/${fileName}`,
+            snap: `/uploads/${fileName}`,
             sender: req.user._id,
-            recepients
+            recepients: populatedReceivers
         }
-
+      
         const saveSnap = await snapService.createSnap(snapObject)
 
-        if(saveSnap) {
+        if (saveSnap) {
             return res.status(201).json({ message: "wuhoo! Snap uploaded successfully!" })
         }
 
         return res.status(500).json({ err: "Db error..." })
+    }
+
+    async getAllSnaps(req, res) {
+        const _id = req.user._id
+
+        const snaps = await snapService.getSnaps({
+            $or: [
+                { sender: _id },
+                { 'recepients._id': _id }
+            ]
+        })
+        
+        return res.status(200).json({ snaps })
+
     }
 
 }

@@ -17,6 +17,12 @@ const Topbar = ({ isCamera }) => {
                 </div>
             </div>
 
+            {
+                !isCamera && <div className='flex-1 flex-center'>
+                    <span className="font-extrabold text-xl">Chat</span>
+                </div>
+            }
+
             <div className="flex">
                 <div className="">
                     <div className="bg-black/25 flex-center rounded-full h-12 w-12">
@@ -46,9 +52,9 @@ const Topbar = ({ isCamera }) => {
                             </div>
                             :
                             <div className="bg-black/25 flex-center rounded-full h-12 w-12">
-                                <div className="w-2 h-2 bg-gray-100"></div>
-                                <div className="w-2 h-2 bg-gray-100 mx-2"></div>
-                                <div className="w-2 h-2 bg-gray-100"></div>
+                                <div className="w-2 h-2 rounded-full bg-gray-100"></div>
+                                <div style={{ margin: '0 3px' }} className="w-2 h-2 rounded-full bg-gray-100"></div>
+                                <div className="w-2 h-2 rounded-full bg-gray-100"></div>
                             </div>
                     }
                 </div>
