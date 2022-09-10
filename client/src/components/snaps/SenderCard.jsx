@@ -16,7 +16,9 @@ const SenderCard = ({ rec, snap }) => {
                                     src="/images/opened.png"
                                     style={{ width: 18, height: 18 }} />
                                 <span className="font-bold text-red-500 text-sm ml-2">Opened</span>
-                                <span className="text-sm text-gray-300">3mins ago</span>
+                                <span className="text-sm text-gray-300 ml-2">
+                                    {moment(snap.updatedAt, 'YYYYMMDD').fromNow()}
+                                </span>
                             </>
                             :
                             <>
