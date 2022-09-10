@@ -8,11 +8,12 @@ class SignupController {
     async signupUser(req, res) {
         const { name,
             birthday,
+            bitmoji,
             username,
             email,
             password } = req.body
 
-        if (!name || !birthday || !username || !email || !password) {
+        if (!name || !birthday || !bitmoji || !username || !email || !password) {
             return res.status(400).json({ err: 'All fields are required!' })
         }
 

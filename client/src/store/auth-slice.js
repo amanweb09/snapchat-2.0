@@ -5,6 +5,7 @@ const initialState = {
         firstName: '',
         lastName: ''
     },
+    bitmoji: '',
     birthday: '',
     username: '',
     email: '',

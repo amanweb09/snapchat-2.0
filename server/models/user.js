@@ -23,6 +23,13 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    bitmoji: {
+        type: String
+    },
+    score: {
+        type: Number,
+        default: 0
+    },
     accessToken: {
         type: String,
         required: false

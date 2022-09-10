@@ -19,7 +19,10 @@ const BestFriendCard = ({ friend }) => {
             className="bg-white flex-center rounded-md shadow-md p-2">
             <div className="flex">
                 <div className="h-full flex-center">
-                    <img src={friend.bitmoji || "/images/bitmoji-3.png"} alt="bitmoji" className='h-12' />
+                    <img
+                        src={friend.bitmoji ? `/images/${friend.bitmoji}` : '/images/bitmoji-3.png'}
+                        alt="bitmoji"
+                        className='h-12' />
                 </div>
                 <div className="ml-2">
                     <span className='capitalize'>{friend.name}</span>

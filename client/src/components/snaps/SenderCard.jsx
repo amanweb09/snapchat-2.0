@@ -4,7 +4,10 @@ import moment from 'moment'
 const SenderCard = ({ rec, snap }) => {
     return (
         <div className='w-full px-4 py-2 flex items-center justify-evenly'>
-            <img src='/images/bitmoji-3.png' alt="bitmoji" className="h-14" />
+            <img
+                src={snap.sender.bitmoji ? `/images/${snap.sender.bitmoji}` : '/images/bitmoji-3.png'}
+                alt="bitmoji"
+                className="h-14" />
 
             <div className="flex-1">
                 <span className={`font-bold text-lg block capitalize`}>{rec.receiver?.name}</span>
@@ -17,7 +20,7 @@ const SenderCard = ({ rec, snap }) => {
                                     style={{ width: 18, height: 18 }} />
                                 <span className="font-bold text-red-500 text-sm ml-2">Opened</span>
                                 <span className="text-sm text-gray-300 ml-2">
-                                    {moment(snap.updatedAt, 'YYYYMMDD').fromNow()}
+                                    {moment(snap.updatedAt).fromNow()}
                                 </span>
                             </>
                             :
@@ -27,7 +30,7 @@ const SenderCard = ({ rec, snap }) => {
                                     style={{ width: 18, height: 18 }} />
                                 <span className="font-bold text-red-500 text-sm ml-2">Snap sent</span>
                                 <span className="text-sm text-gray-300 ml-2">
-                                    {moment(snap.updatedAt, 'YYYYMMDD').fromNow()}
+                                    {moment(snap.updatedAt).fromNow()}
                                 </span>
                             </>
                     }

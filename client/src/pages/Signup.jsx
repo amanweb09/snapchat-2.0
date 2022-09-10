@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Birthday from './signup/Birthday'
+import Bitmoji from './signup/Bitmoji'
 import Email from './signup/Email'
 import Name from './signup/Name'
 import Username from './signup/Username'
@@ -7,8 +8,9 @@ import Username from './signup/Username'
 const Screens = {
     1: Name,
     2: Birthday,
-    3: Username,
-    4: Email
+    3: Bitmoji,
+    4: Username,
+    5: Email
 }
 
 const Signup = () => {

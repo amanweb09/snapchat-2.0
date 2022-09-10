@@ -88,6 +88,10 @@ class SnapController {
         }
     }
 
+    deleteSnap(req, res) {
+        snapService.deleteSnapAfterOpen(req.body.snap)
+        return res.status(200).json({ message: "snap deleted successfully!" })
+    }
 }
 
 module.exports = new SnapController()

@@ -1,5 +1,7 @@
 const Snaps = require("../models/snap")
 const userService = require('./user-service')
+const fs = require('fs')
+const path = require('path')
 
 class SnapService {
 
@@ -34,6 +36,11 @@ class SnapService {
         } catch (err) {
             return err
         }
+    }
+
+    deleteSnapAfterOpen(fileName) {
+        const filePath = path.resolve(__dirname, `../${fileName}`)
+        return fs.unlinkSync(filePath)
     }
 
 }
