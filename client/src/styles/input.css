@@ -18,6 +18,19 @@ input {
     animation: spin 0.5s linear infinite
 }
 
+.wrapper {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.loader:nth-child(1) {
+    animation: l1 infinite 1s linear;
+}
+.loader:nth-child(2) {
+    animation: l2 infinite 1s linear;
+}
+
 @keyframes spin {
 
     100% {
@@ -25,3 +38,19 @@ input {
     }
 
 }
+
+@keyframes l1 {
+
+    100% {
+        transform: rotateZ(360deg)
+    }
+
+}
+@keyframes l2 {
+
+    100% {
+        transform: rotateZ(-360deg)
+    }
+
+}
+

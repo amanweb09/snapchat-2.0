@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Splash from './pages/Splash';
 import './styles/App.css';
 import './styles/tailwind.css';
@@ -10,24 +10,30 @@ import Camera from './pages/Camera';
 import { refresh } from './api';
 import { setIsAuth } from './store/user-slice';
 import Snaps from './pages/Snaps';
+import Loader from './components/shared/Loader';
 
 function App() {
 
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function refreshUser() {
       try {
         const { data } = await refresh()
         dispatch(setIsAuth(data))
+        setLoading(false)
 
       } catch (error) {
         console.log(error);
+        setLoading(false)
       }
     }
 
     refreshUser()
   }, [])
+
+  if(loading) return <Loader />
 
   return (
     <Router>

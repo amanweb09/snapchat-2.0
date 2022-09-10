@@ -23,7 +23,6 @@ const Snaps = () => {
       try {
         const { data } = await getAllSnaps()
         setSnaps(data.snaps)
-        console.log(data.snaps);
 
       } catch (error) {
         console.log(error)
@@ -54,7 +53,10 @@ const Snaps = () => {
                 {
                   user._id === snap.sender._id ?
                     snap.recepients.map((rec) => {
-                      return <SenderCard rec={rec} />
+                      return <SenderCard
+                        snap={snap}
+                        rec={rec}
+                        key={rec.receiver?._id} />
                     })
 
                     :

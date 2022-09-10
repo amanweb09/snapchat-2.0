@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import moment from 'moment'
 
 const ReceiverCard = ({ openSnap, snap }) => {
 
@@ -16,7 +17,10 @@ const ReceiverCard = ({ openSnap, snap }) => {
 
     return (
         <div
-            onClick={() => { openSnap(snap.snap, snap._id) }}
+            onClick={() => {
+                if (myRec.isOpened === true) { return }
+                openSnap(snap.snap, snap._id)
+            }}
             className='w-full px-4 py-2 flex items-center justify-evenly'>
 
             <img
@@ -29,17 +33,19 @@ const ReceiverCard = ({ openSnap, snap }) => {
                 <div className="flex">
                     {
                         myRec.isOpened === true ?
-                            
+
                             <div
                                 style={{ width: 18, height: 18 }}
                                 className="border-2 border-solid border-red-500 rounded-md"></div>
                             :
-                        <div
-                            style={{ width: 18, height: 18 }}
-                            className="bg-red-500 rounded-md"></div>
+                            <div
+                                style={{ width: 18, height: 18 }}
+                                className="bg-red-500 rounded-md"></div>
                     }
                     <span className="font-bold text-red-500 text-sm ml-2">New Snap</span>
-                    <span className="text-sm text-gray-300">13h</span>
+                    <span className="text-sm text-gray-300 ml-2 inline-block">
+                        {moment(snap.updatedAt, 'YYYYMMDD').fromNow()}
+                    </span>
                 </div>
             </div>
 

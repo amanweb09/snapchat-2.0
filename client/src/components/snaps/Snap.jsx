@@ -23,7 +23,6 @@ const Snap = ({ snapUrl, setShowSnap, receiverId }) => {
     useEffect(() => {
 
         async function changeSnapToOpened() {
-            // console.log({ status: true, _id: snapUrl.snapId, receiverId });
             try {
                 await changeSnapStatus({ status: true, _id: snapUrl.snapId, receiverId })
                 setIsLoaded(true)
