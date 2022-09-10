@@ -3,10 +3,16 @@ import { getAllSnaps } from '../api'
 import BottomTabs from '../components/shared/BottomTabs'
 import Topbar from '../components/shared/Topbar'
 import { useSelector } from 'react-redux'
+import Snap from '../components/snaps/Snap'
 
 const Snaps = () => {
 
   const [snaps, setSnaps] = useState([])
+  const [showSnap, setShowSnap] = useState(false)
+  const [url, setUrl] = useState({
+    snapId: "", url: ""
+  })
+
   const { user } = useSelector((state) => state.user)
 
   useEffect(() => {
@@ -26,6 +32,15 @@ const Snaps = () => {
 
   }, [])
 
+  function openSnap(snapUrl, snapId) {
+    setUrl({ snapId, url: snapUrl })
+    setShowSnap(true)
+  }
+
+  if (showSnap) {
+    return <Snap snapUrl={url} setShowSnap={setShowSnap} receiverId={user._id} />
+  }
+
   return (
     <div>
       <Topbar isCamera={false} />
@@ -39,20 +54,31 @@ const Snaps = () => {
                     snap.recepients.map((rec) => {
 
                       return (
-                        <div onClick={() => {console.log('userId', user._id, 'senderId', snap.sender._id)}} className='w-full px-4 py-2 flex items-center justify-evenly'>
+                        <div className='w-full px-4 py-2 flex items-center justify-evenly'>
                           <img src='/images/bitmoji-3.png' alt="bitmoji" className="h-14" />
 
                           <div className="flex-1">
                             <span className={`font-bold text-lg block capitalize`}>{rec.receiver?.name}</span>
                             <div className="flex">
                               {
-                                rec.receiver?.isOpened ?
-                                <img src="/images/opened.png" style={{ width: 18, height: 18 }} />
-                                :
-                                <img src="/images/sent.png" style={{ width: 18, height: 18 }} />
+                                rec.isOpened ?
+                                  <>
+                                    <img
+                                      src="/images/opened.png"
+                                      style={{ width: 18, height: 18 }} />
+                                    <span className="font-bold text-red-500 text-sm ml-2">Opened</span>
+                                    <span className="text-sm text-gray-300">3mins ago</span>
+                                  </>
+                                  :
+                                  <>
+                                    <img
+                                      src="/images/sent.png"
+                                      style={{ width: 18, height: 18 }} />
+                                    <span className="font-bold text-red-500 text-sm ml-2">Snap sent</span>
+                                    <span className="text-sm text-gray-300">13h</span>
+                                  </>
                               }
-                              <span className="font-bold text-red-500 text-sm ml-2">Snap sent</span>
-                              <span className="text-sm text-gray-300">13h</span>
+
                             </div>
                           </div>
 
@@ -63,8 +89,14 @@ const Snaps = () => {
                       )
                     })
                     :
-                    <div className='w-full px-4 py-2 flex items-center justify-evenly'>
-                      <img src='/images/bitmoji-3.png' alt="bitmoji" className="h-14" />
+                    <div
+                      onClick={() => { openSnap(snap.snap, snap._id) }}
+                      className='w-full px-4 py-2 flex items-center justify-evenly'>
+
+                      <img
+                        src='/images/bitmoji-3.png'
+                        alt="bitmoji"
+                        className="h-14" />
 
                       <div className="flex-1">
                         <span className={`font-bold text-lg block capitalize`}>{snap.sender.name}</span>

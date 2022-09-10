@@ -13,8 +13,8 @@ const WebCam = ({ cameraRef, clickSnap }) => {
                     <Webcam
                         screenshotFormat='image/jpeg'
                         ref={cameraRef}
-                        height={700}
-                        width={400}
+                        height={window.innerHeight}
+                        width={window.innerWidth}
                         videoConstraints={{
                             facingMode: 'user',
                             height: 800,

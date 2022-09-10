@@ -16,5 +16,6 @@ router.get('/users/all', authenticate, userController.getAllUsers)
 
 router.post('/snap/create', authenticate, snapController.uploadSnap)
 router.get('/snap/get/all', authenticate, snapController.getAllSnaps)
+router.post('/snap/status', authenticate, snapController.changeSnapStatus)
 
 module.exports = router

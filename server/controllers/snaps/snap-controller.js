@@ -23,7 +23,7 @@ class SnapController {
             console.log(error);
             return res.status(500).json({ err: "Couldn't process your snap :(" })
         }
-        
+
         const receivers = await snapService.getReceivers(recepients)
         const populatedReceivers = [];
 
@@ -39,7 +39,7 @@ class SnapController {
             sender: req.user._id,
             recepients: populatedReceivers
         }
-      
+
         const saveSnap = await snapService.createSnap(snapObject)
 
         if (saveSnap) {
@@ -55,12 +55,37 @@ class SnapController {
         const snaps = await snapService.getSnaps({
             $or: [
                 { sender: _id },
-                { 'recepients._id': _id }
+                { 'recepients.receiver._id': _id }
             ]
         })
-        
+
         return res.status(200).json({ snaps })
 
+    }
+
+    async changeSnapStatus(req, res) {
+
+        const { status, _id, receiverId } = req.body;
+
+        const [snap] = await snapService.getSnaps({ _id })
+
+        if (!snap) {
+            return res.status(500).json({ err: "Snap not found" })
+        }
+
+        const receiver = snap.recepients.filter((rec) => { return rec.receiver._id.toString() === receiverId })
+        if (!receiver.length) {
+            return res.status(404).json({ err: "User not found" })
+        }
+
+        receiver[0].isOpened = status
+        try {
+            await snap.save()
+            return res.status(200).json({ snap })
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ err: "db error..." })
+        }
     }
 
 }

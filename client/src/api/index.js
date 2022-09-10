@@ -25,3 +25,4 @@ export const getAllUsers = async () => api.get('/api/users/all')
 /* snaps */
 export const sendSnap = async (data) => api.post('/api/snap/create', data)
 export const getAllSnaps = async () => api.get('/api/snap/get/all')
+export const changeSnapStatus = async (data) => api.post('/api/snap/status', data)
