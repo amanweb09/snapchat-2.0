@@ -4,6 +4,8 @@ import BottomTabs from '../components/shared/BottomTabs'
 import Topbar from '../components/shared/Topbar'
 import { useSelector } from 'react-redux'
 import Snap from '../components/snaps/Snap'
+import SenderCard from '../components/snaps/SenderCard'
+import ReceiverCard from '../components/snaps/ReceiverCard'
 
 const Snaps = () => {
 
@@ -52,65 +54,17 @@ const Snaps = () => {
                 {
                   user._id === snap.sender._id ?
                     snap.recepients.map((rec) => {
-
-                      return (
-                        <div className='w-full px-4 py-2 flex items-center justify-evenly'>
-                          <img src='/images/bitmoji-3.png' alt="bitmoji" className="h-14" />
-
-                          <div className="flex-1">
-                            <span className={`font-bold text-lg block capitalize`}>{rec.receiver?.name}</span>
-                            <div className="flex">
-                              {
-                                rec.isOpened ?
-                                  <>
-                                    <img
-                                      src="/images/opened.png"
-                                      style={{ width: 18, height: 18 }} />
-                                    <span className="font-bold text-red-500 text-sm ml-2">Opened</span>
-                                    <span className="text-sm text-gray-300">3mins ago</span>
-                                  </>
-                                  :
-                                  <>
-                                    <img
-                                      src="/images/sent.png"
-                                      style={{ width: 18, height: 18 }} />
-                                    <span className="font-bold text-red-500 text-sm ml-2">Snap sent</span>
-                                    <span className="text-sm text-gray-300">13h</span>
-                                  </>
-                              }
-
-                            </div>
-                          </div>
-
-                          <div className='bg-black/25 p-2 rounded-md'>
-                            <img src="/images/camera.png" alt="camera" className='h-6' />
-                          </div>
-                        </div>
-                      )
+                      return <SenderCard rec={rec} />
                     })
+
                     :
-                    <div
-                      onClick={() => { openSnap(snap.snap, snap._id) }}
-                      className='w-full px-4 py-2 flex items-center justify-evenly'>
-
-                      <img
-                        src='/images/bitmoji-3.png'
-                        alt="bitmoji"
-                        className="h-14" />
-
-                      <div className="flex-1">
-                        <span className={`font-bold text-lg block capitalize`}>{snap.sender.name}</span>
-                        <div className="flex">
-                          <div style={{ width: 18, height: 18 }} className="bg-red-500 rounded-md"></div>
-                          <span className="font-bold text-red-500 text-sm ml-2">New Snap</span>
-                          <span className="text-sm text-gray-300">13h</span>
-                        </div>
-                      </div>
-
-                      <div className='bg-black/25 p-2 rounded-md'>
-                        <img src="/images/camera.png" alt="camera" className='h-6' />
-                      </div>
-                    </div>
+                    /* {recepients: [
+                      {receiver: {_id, name, username...}, isOpened: true },
+                      {receiver: {_id, name, username...}, isOpened: true },
+                    ]} */
+                    <ReceiverCard
+                      openSnap={openSnap}
+                      snap={snap} />
                 }
               </div>
             )
